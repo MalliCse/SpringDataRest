@@ -1,0 +1,33 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.2'
+	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'groovy'
+	id 'codenarc'
+	
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.codehaus.groovy:groovy'
+	implementation 'org.codenarc:CodeNarc:3.1.0'
+	runtimeOnly 'mysql:mysql-connector-java'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+codenarc {
+	configFile = file("C:/Users/MKURMALA/Documents/sts/SpringDataRest/src/main/groovy/configuration/codenarc.groovy")
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
