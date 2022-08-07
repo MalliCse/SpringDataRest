@@ -11,6 +11,7 @@ class GlobalExceptions {
 	ResponseEntity<String> handleNameException() {
 		return new ResponseEntity('Name Should Not Be Empty', HttpStatus.BAD_REQUEST)
 	}
+	
 	/*@ExceptionHandler(HttpRequestMethodNotSupportedException)
 	ResponseEntity<String> handleDeleteException() {
 		return new ResponseEntity('Delete Operation can not be done', HttpStatus.BAD_REQUEST)
