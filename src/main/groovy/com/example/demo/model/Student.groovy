@@ -6,19 +6,23 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+
 @Entity
 class Student {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int rollno
+	Long id
 	@Column
+	//@JsonIgnore
 	String name
-	int getRollno() {
-		return rollno
+	Long getId() {
+		return id
 	}
-	void setRollno(int rollno) {
-		this.rollno = rollno
+	void setId(Long id) {
+		this.id = id
 	}
+	//@JsonIgnore
 	String getName() {
 		return name
 	}
@@ -28,9 +32,9 @@ class Student {
 	Student() {
 		super()
 	}
-	Student(int rollno, String name) {
+	Student(Long id, String name) {
 		super()
-		this.rollno = rollno
+		this.id = id
 		this.name = name
 	}
 }
