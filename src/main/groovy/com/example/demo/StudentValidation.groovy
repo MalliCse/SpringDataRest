@@ -1,33 +1,37 @@
 package com.example.demo
 
+import org.apache.tools.ant.types.selectors.ExtendSelector
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete
 import org.springframework.data.rest.core.annotation.HandleBeforeSave
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration
+import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
 import com.example.demo.model.Student
 
-@Component
+@Service
 @RepositoryEventHandler(Student)
-class StudentValidation {
+class StudentValidation{
 	@Autowired
 	StudentRepository sturepo
 	@HandleBeforeCreate
-	void handleStudentCreate(Student p) {
+	void handleStudentCreate(Student student) {
 	  // � you can now deal with Person in a type-safe way
-		if (p.name().empty()) {
+		if (student.getName().isEmpty()) {
 			throw new NameValidationException('Name Should not be empty')
 		}
+		println("Received Post Request");
 	}
-	/*@HandleBeforeDelete
-	void handleStudentDelete(Student p) {
+	@HandleBeforeDelete
+	void handleStudentDelete(int id) {
 	  // � you can now deal with Person in a type-safe way
-		if (p.rollno() > 0) {
-			throw new NullPointerException('Delete Operation Can Not Be Done')
-		}
-	}*/
+		println("Received Delete Request");
+		
+	}
 	/*@HandleBeforeSave
 	ResponseEntity<String> handleStudentSave1(Student p) {
 	  // � you can now deal with Person in a type-safe way
