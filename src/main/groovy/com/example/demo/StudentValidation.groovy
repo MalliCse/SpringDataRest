@@ -1,15 +1,13 @@
 package com.example.demo
 
-import org.apache.tools.ant.types.selectors.ExtendSelector
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate
 import org.springframework.data.rest.core.annotation.HandleBeforeDelete
 import org.springframework.data.rest.core.annotation.HandleBeforeSave
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration
-import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy
-import org.springframework.stereotype.Component
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 import com.example.demo.model.Student
 
@@ -18,27 +16,27 @@ import com.example.demo.model.Student
 class StudentValidation{
 	@Autowired
 	StudentRepository sturepo
+	
 	@HandleBeforeCreate
 	void handleStudentCreate(Student student) {
 	  // � you can now deal with Person in a type-safe way
-		if (student.getName().isEmpty()) {
-			throw new NameValidationException('Name Should not be empty')
-		}
+		//student.setName("Aruna")
+		Student studentDb=sturepo.findByName(student.getName())
+		if(studentDb!=null)
+			throw new ResponseStatusException(HttpStatus.CONFLICT,"Details Are Already Available&Not Persisted with Student name ${student.getName()}");
 		println("Received Post Request");
 	}
 	@HandleBeforeDelete
-	void handleStudentDelete(int id) {
+	void handleStudentDelete(Student student) {
 	  // � you can now deal with Person in a type-safe way
 		println("Received Delete Request");
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Delete Operation Can Not Be Performed");
 		
 	}
-	/*@HandleBeforeSave
-	ResponseEntity<String> handleStudentSave1(Student p) {
+	@HandleBeforeSave
+	void handleStudentSave1(Student p) {
 	  // � you can now deal with Person in a type-safe way
+		println("Received Update Request");
 		print p.getName()
-		if(p.getName().equals("Malli"))
-		  return new ResponseEntity<String>("Name Should Be Malli", HttpStatus.BAD_REQUEST);
-		else
-			return new ResponseEntity<String>("Details Are Saved", HttpStatus.CREATED);
-	}*/
+	}
 }
