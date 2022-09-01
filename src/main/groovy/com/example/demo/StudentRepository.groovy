@@ -20,9 +20,9 @@ interface StudentRepository extends CrudRepository<Student,Long> {
 	@RestResource(exported = false)
 	void deleteById(Long id);*/
 	
-	/*@Override
+	@Override
 	@RestResource(exported = false)
-	Student findById(Long id)*/
+	Student findById(Long id)
 	
 	@RestResource(path = "byName")
 	Student findByName(@Param("name") String name);
